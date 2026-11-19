@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f1e9">
+<title>QUADRA — a day that stays | Version 9</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#f4f1e9;--panel:#fffdf8;--paper:#292923;--muted:#77766d;--line:#dedbd1;--accent:#a66f4d;--serif:'Playfair Display',Georgia,serif;--sans:'Manrope',Arial,sans-serif;--mono:'DM Mono',monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--paper);font-family:var(--sans);min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,76px);position:sticky;top:0;background:rgba(244,241,233,.94);backdrop-filter:blur(14px);z-index:5}
+.brand{font-family:var(--serif);font-size:23px;letter-spacing:.12em}.brand span{color:var(--accent)}.nav{display:flex;gap:24px;align-items:center}.nav button{background:none;border:0;color:var(--muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.nav button.active,.nav button:hover{color:var(--paper)}
+main{max-width:1180px;margin:auto;padding:50px clamp(20px,5vw,76px) 90px}.eyebrow{font:11px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}h1,h2,h3,p{margin-top:0}.hero{min-height:430px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding:35px 0 65px}.hero h1{font:clamp(55px,8vw,104px)/.95 var(--serif);font-weight:500;letter-spacing:-.055em;margin:18px 0 24px}.hero h1 em{color:var(--accent);font-weight:500}.hero p{color:var(--muted);line-height:1.8;max-width:440px;font-size:14px}.hero-art{height:430px;position:relative;border:1px solid #c8bca9;background:linear-gradient(135deg,#d9c8ae 0%,#eee4d2 48%,#a9aa91 100%);overflow:hidden;padding:30px;display:flex;align-items:flex-end;isolation:isolate;box-shadow:0 24px 55px rgba(69,54,36,.12)}
+.hero-art:before{content:"";position:absolute;z-index:-1;width:68%;height:88%;right:8%;top:5%;background:linear-gradient(155deg,rgba(248,240,222,.92),rgba(186,184,151,.9) 58%,rgba(103,119,99,.9));transform:rotate(7deg);box-shadow:0 18px 35px rgba(56,48,36,.18);border:1px solid rgba(255,255,255,.45)}
+.hero-art:after{content:"";position:absolute;z-index:-1;left:9%;top:12%;width:38%;height:60%;border:1px solid rgba(255,255,255,.58);background:linear-gradient(160deg,rgba(118,132,111,.18),rgba(245,225,193,.25)),radial-gradient(ellipse at 50% 25%,rgba(255,255,255,.65),transparent 58%);transform:rotate(-8deg);box-shadow:0 12px 30px rgba(70,56,39,.12)}
+.art-caption{padding:18px 20px;background:rgba(37,39,34,.78);color:#fff8ec;backdrop-filter:blur(8px);letter-spacing:.01em}
+.art-caption small{color:#d7b99f}.art-caption{position:relative;z-index:1;font:clamp(22px,3vw,34px) var(--serif);max-width:220px}.art-caption small{display:block;font:10px var(--mono);letter-spacing:.15em;margin-bottom:12px;color:#fff8e9}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fffdf8;padding:14px 20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;transition:.2s}.btn:hover{background:#efc58f;transform:translateY(-2px)}.btn.secondary{background:transparent;color:var(--paper);border-color:var(--line)}.btn.secondary:hover{border-color:var(--accent);color:var(--accent)}.section-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:16px;margin:25px 0 24px}.section-head h2{font:34px var(--serif);font-weight:500;margin:8px 0 0}.section-head p{font-size:12px;color:var(--muted);margin:0}
+.view{display:none}.view.active{display:block}.form-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}.field{margin-bottom:22px}.field label{display:block;font:10px var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.field textarea,.field input[type=text]{width:100%;background:#fffdf8;border:1px solid var(--line);color:var(--paper);padding:16px;outline:none}.field textarea{min-height:170px;resize:vertical;line-height:1.7}.field textarea:focus,.field input:focus{border-color:var(--accent)}.hint{font-size:11px;color:#8b887e;margin-top:8px}.upload{border:1px dashed #615d51;padding:18px;background:#f0ede5}.upload input{max-width:100%;color:var(--muted);font-size:12px}.file-list{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.7}.preview-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.preview-strip img{width:100%;height:95px;object-fit:cover;filter:saturate(.8)}
+.panel{border:1px solid var(--line);background:var(--panel);padding:22px}.panel h3{font:24px var(--serif);font-weight:500;margin-bottom:8px}.panel p{font-size:12px;color:var(--muted);line-height:1.7}.mood-row{display:flex;gap:8px;flex-wrap:wrap}.mood-chip{border:1px solid var(--line);padding:8px 11px;color:var(--muted);font-size:11px;background:transparent}.mood-chip.selected{border-color:var(--accent);color:var(--accent);background:#f1e6d9}
+.generated{--memory-accent:#d9a86c;--memory-bg:#343329;background:var(--memory-bg);color:#292923;min-height:460px;padding:clamp(22px,5vw,56px);position:relative;overflow:hidden;border:1px solid rgba(55,48,38,.12);transition:background .5s}.generated:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,color-mix(in srgb,var(--memory-accent),transparent 65%),transparent 42%);pointer-events:none}.memory-top,.memory-content{position:relative;z-index:1}.memory-top{display:flex;justify-content:space-between;font:10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#77766d}.memory-content{max-width:690px;margin:65px auto 35px}.memory-content h2{font:clamp(38px,7vw,76px)/1.03 var(--serif);font-weight:500;letter-spacing:-.04em;margin:0 0 20px}.memory-content p{font-size:14px;line-height:1.9;color:#514e45;max-width:580px;white-space:pre-wrap}.memory-photos{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:28px}.memory-photos img{width:100%;height:210px;object-fit:cover;filter:saturate(.78);border:1px solid rgba(55,48,38,.2)}.memory-photos img:nth-child(2){margin-top:35px;height:175px}.memory-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(55,48,38,.18);padding-top:16px;font:10px var(--mono);letter-spacing:.1em;color:#77766d}
+.generated.calm .memory-content{animation:floatIn 1.4s ease both}.generated.energetic .memory-content{animation:riseIn .7s ease both}.generated.melancholy .memory-content{animation:fadeIn 2s ease both}@keyframes floatIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@keyframes riseIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.archive-card{border:1px solid var(--line);background:var(--panel);cursor:pointer;transition:.2s}.archive-card:hover{transform:translateY(-3px);border-color:var(--accent)}.archive-image{height:165px;background:linear-gradient(135deg,#5d5747,#292a25);overflow:hidden}.archive-image img{width:100%;height:100%;object-fit:cover}.archive-info{padding:15px}.archive-info small{font:10px var(--mono);color:var(--accent)}.archive-info h3{font:22px var(--serif);font-weight:500;margin:8px 0}.archive-info p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}.empty{padding:45px 20px;text-align:center;border:1px dashed var(--line);color:var(--muted);font-size:13px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#292923;color:#fffdf8;padding:12px 18px;font-size:12px;z-index:20;display:none}.footer{border-top:1px solid var(--line);padding:24px clamp(20px,5vw,76px);color:#777369;font:10px var(--mono);letter-spacing:.12em;display:flex;justify-content:space-between}
+@media(max-width:760px){.topbar{height:62px}.nav{gap:12px}.nav button{font-size:9px}.hero{grid-template-columns:1fr;padding-top:22px;gap:18px}.hero-art{height:220px}.form-grid{grid-template-columns:1fr}.archive-grid{grid-template-columns:1fr 1fr}.memory-content{margin-top:45px}.memory-photos img{height:145px}.memory-photos img:nth-child(2){height:125px}.section-head h2{font-size:28px}}
+@media(max-width:440px){.brand{font-size:18px}.nav{gap:7px}.nav button{letter-spacing:.03em}.archive-grid{grid-template-columns:1fr}.hero h1{font-size:58px}.memory-bottom{font-size:8px}}
+
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:.22em}
+.brand-mark{display:inline-grid;place-items:center;width:30px;height:30px;border:1px solid var(--accent);border-radius:50%;font:600 17px var(--serif);color:var(--accent);letter-spacing:0}
+.hero .eyebrow:before{content:"";display:inline-block;width:24px;height:1px;background:var(--accent);margin-right:9px;vertical-align:middle}
+.memory-brand{font-family:var(--sans);font-weight:800;letter-spacing:.18em;color:#292923}
+.memory-brand b{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--memory-accent);border-radius:50%;font:12px var(--serif);color:var(--memory-accent);margin-right:6px}
+.memory-brand i{font-style:normal;font-weight:400;color:#77766d;letter-spacing:.1em}
+.sound-note{display:inline-block;margin-top:4px;padding:8px 11px;border:1px solid rgba(55,48,38,.2);font:9px var(--mono);letter-spacing:.12em;color:#80644f}
+.memory-content{max-width:720px}
+.generated{box-shadow:0 22px 65px rgba(0,0,0,.22)}
+.archive-card:focus-visible,.btn:focus-visible,.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.upload,.field textarea,.field input[type=text]{border-radius:2px}
+@media(max-width:440px){.brand{font-size:13px;letter-spacing:.16em}.brand-mark{width:26px;height:26px}.memory-brand i{display:none}}
+
+
+/* QUADRA V3 — light editorial system */
+:root{color-scheme:light}
+body{background:var(--bg);color:var(--paper)}
+.topbar{border-color:var(--line)}
+.nav button{color:var(--muted)}
+.panel{box-shadow:0 8px 28px rgba(57,49,35,.045)}
+.field textarea,.field input[type=text],.archive-tools input,.archive-tools select{background:#fffdf8;color:#292923;border:1px solid #dedbd1}
+.field textarea::placeholder,.field input::placeholder,.archive-tools input::placeholder{color:#aaa69b}
+.upload{background:#f0ede5;border-color:#cbc5b8}
+.hero-art{box-shadow:0 18px 45px rgba(75,64,45,.10)}
+.archive-card{background:#fffdf8;border-color:#e1ddd3}
+.archive-card:hover{box-shadow:0 12px 28px rgba(57,49,35,.08)}
+.archive-tools{display:flex;gap:10px;margin:-5px 0 22px;flex-wrap:wrap}
+.archive-tools input,.archive-tools select{padding:12px 14px;font-size:12px;outline:none}
+.archive-tools input{flex:1;min-width:210px}
+.archive-tools select{min-width:165px}
+.archive-tools input:focus,.archive-tools select:focus{border-color:var(--accent)}
+.generated{color:#292923}
+.memory-top,.memory-bottom{color:#77766d}
+.memory-content p{color:#514e45}
+.memory-photos img{border-color:rgba(55,48,38,.18)}
+.sound-note{background:rgba(255,255,255,.38)}
+.toast{background:#292923;color:#fffdf8;box-shadow:0 8px 30px rgba(0,0,0,.15)}
+.footer{border-color:var(--line);color:#969187}
+.empty{border-color:#d4cfc3}
+@media(max-width:600px){.archive-tools{display:grid;grid-template-columns:1fr}.archive-tools input,.archive-tools select{width:100%}}
+
+
+/* Theme switcher */
+.theme-switch{display:flex;align-items:center;gap:6px;padding:5px;border:1px solid var(--line,#dedbd4);border-radius:999px;background:var(--surface,#fff);width:max-content}
+.theme-btn{border:0;border-radius:999px;padding:8px 12px;background:transparent;color:var(--muted,#777);font:inherit;font-size:12px;cursor:pointer;transition:background .2s,color .2s}
+.theme-btn.active{background:var(--accent,#a65f45);color:#fff}
+.theme-btn:focus-visible{outline:2px solid var(--accent,#a65f45);outline-offset:3px}
+body[data-theme="dark"]{--bg:#171817;--surface:#222522;--surface-2:#292d29;--text:#f0eee8;--muted:#aaa99f;--line:#3a3e38;--accent:#bd795d;--accent-soft:#3b302a;--olive:#a4a77c;--shadow:0 16px 45px rgba(0,0,0,.22);background:var(--bg);color:var(--text)}
+body[data-theme="dark"] .theme-switch{background:var(--surface);border-color:var(--line)}
+body[data-theme="dark"] .theme-btn{color:var(--muted)}
+body[data-theme="dark"] .theme-btn.active{background:var(--accent);color:#fff}
+body[data-theme="dark"] input,body[data-theme="dark"] textarea,body[data-theme="dark"] select{background:var(--surface-2);color:var(--text);border-color:var(--line)}
+body[data-theme="dark"] .card,body[data-theme="dark"] .memory-card,body[data-theme="dark"] .panel,body[data-theme="dark"] .modal,body[data-theme="dark"] .result-card{background:var(--surface);color:var(--text);border-color:var(--line)}
+body[data-theme="dark"] .muted,body[data-theme="dark"] small{color:var(--muted)}
+body[data-theme="dark"] .nav,body[data-theme="dark"] header,body[data-theme="dark"] footer{border-color:var(--line)}
+body[data-theme="dark"] .tag,body[data-theme="dark"] .chip{background:var(--accent-soft);color:#e7c5b4;border-color:var(--line)}
+body[data-theme="dark"] .btn-secondary,body[data-theme="dark"] .secondary{background:var(--surface-2);color:var(--text);border-color:var(--line)}
+body[data-theme="dark"] .theme-switch{box-shadow:none}
+@media(max-width:600px){.theme-switch{gap:2px}.theme-btn{padding:7px 9px}.theme-btn span{font-size:11px}}
+
+/* Visual refinements for the theme bar and hero artwork */
+body[data-theme="dark"] .topbar{
+  background:rgba(23,24,23,.96);
+  border-bottom-color:#3a3e38;
+  color:var(--text);
+}
+body[data-theme="dark"] .topbar .brand{color:#f0eee8}
+body[data-theme="dark"] .topbar .nav button{color:#aaa99f}
+body[data-theme="dark"] .topbar .nav button.active,
+body[data-theme="dark"] .topbar .nav button:hover{color:#f0eee8}
+body[data-theme="dark"] .hero-art{
+  border-color:#4a4940;
+  background:linear-gradient(135deg,#51483d 0%,#343a32 50%,#252b27 100%);
+  box-shadow:0 24px 55px rgba(0,0,0,.28);
+}
+body[data-theme="dark"] .hero-art:before{
+  background:linear-gradient(155deg,rgba(116,103,84,.95),rgba(91,103,83,.94) 58%,rgba(48,66,54,.96));
+  border-color:rgba(255,255,255,.16);
+}
+body[data-theme="dark"] .hero-art:after{
+  border-color:rgba(255,255,255,.2);
+  background:linear-gradient(160deg,rgba(190,151,119,.22),rgba(245,225,193,.08)),radial-gradient(ellipse at 50% 25%,rgba(255,255,255,.18),transparent 58%);
+}
+body[data-theme="dark"] .art-caption{background:rgba(18,20,18,.82);color:#f4eee4}
+body[data-theme="dark"] .art-caption small{color:#d59a7b}
+@media(max-width:700px){
+  .topbar{height:auto;min-height:72px;flex-wrap:wrap;gap:10px;padding:12px 18px}
+  .brand{font-size:19px}
+  .nav{order:3;width:100%;justify-content:space-between;gap:8px;padding:4px 0 2px}
+  .nav button{font-size:10px;padding:7px 2px}
+  .theme-switch{margin-left:auto}
+  .hero{grid-template-columns:1fr;gap:26px;padding-top:38px}
+  .hero-art{height:300px}
+}
+
+
+/* V6: complete dark-theme styling for the creation form and native controls */
+body[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#171817;
+  --panel:#222522;
+  --paper:#f0eee8;
+  --muted:#aaa99f;
+  --line:#3a3e38;
+  --accent:#bd795d;
+}
+body[data-theme="dark"] .field label{color:#c1bdb2}
+body[data-theme="dark"] .field textarea,
+body[data-theme="dark"] .field input[type="text"],
+body[data-theme="dark"] .archive-tools input,
+body[data-theme="dark"] .archive-tools select{
+  background:#242925!important;
+  color:#f0eee8!important;
+  border:1px solid #41473f!important;
+  caret-color:#d28a6c;
+}
+body[data-theme="dark"] .field textarea::placeholder,
+body[data-theme="dark"] .field input::placeholder,
+body[data-theme="dark"] .archive-tools input::placeholder{
+  color:#8f948a!important;
+  opacity:1;
+}
+body[data-theme="dark"] .field textarea:focus,
+body[data-theme="dark"] .field input:focus,
+body[data-theme="dark"] .archive-tools input:focus,
+body[data-theme="dark"] .archive-tools select:focus{
+  border-color:#bd795d!important;
+  box-shadow:0 0 0 2px rgba(189,121,93,.13);
+}
+body[data-theme="dark"] .upload{
+  background:#222723!important;
+  border:1px dashed #62695e!important;
+  color:#e7e3d9;
+}
+body[data-theme="dark"] .upload input{
+  color:#d2d0c7!important;
+  background:transparent!important;
+  max-width:100%;
+}
+body[data-theme="dark"] .upload input::file-selector-button{
+  background:#343a34;
+  color:#f0eee8;
+  border:1px solid #596052;
+  border-radius:2px;
+  padding:9px 12px;
+  margin-right:10px;
+}
+body[data-theme="dark"] .upload input::file-selector-button:hover{
+  background:#454d43;
+}
+body[data-theme="dark"] .hint,
+body[data-theme="dark"] .file-list{color:#aaa99f!important}
+body[data-theme="dark"] .mood-chip{
+  background:#202420!important;
+  color:#c2c0b7!important;
+  border-color:#454b43!important;
+}
+body[data-theme="dark"] .mood-chip.selected{
+  background:#3b302a!important;
+  color:#e0a184!important;
+  border-color:#bd795d!important;
+}
+body[data-theme="dark"] .panel{
+  background:#202420!important;
+  border-color:#3a4039!important;
+  color:#f0eee8;
+}
+body[data-theme="dark"] .panel p{color:#aaa99f}
+body[data-theme="dark"] .archive-card{
+  background:#222522!important;
+  border-color:#3a3e38!important;
+  color:#f0eee8;
+}
+body[data-theme="dark"] .empty{
+  color:#aaa99f;
+  border-color:#454b43;
+}
+body[data-theme="dark"] .btn.secondary{
+  color:#eeeae1;
+  border-color:#555b51;
+}
+body[data-theme="dark"] .btn.secondary:hover{
+  color:#e0a184;
+  border-color:#bd795d;
+}
+body[data-theme="dark"] .footer{color:#888d83}
+@media(max-width:600px){
+  body[data-theme="dark"] .upload{padding:15px 13px}
+  body[data-theme="dark"] .upload input{font-size:11px}
+}
+
+
+
+/* V8 — QUADRA mood intelligence and soundtrack studio */
+.music-studio{border:1px solid var(--line);background:var(--panel);padding:16px;}
+.music-mode-switch{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.music-mode-btn{border:1px solid var(--line);background:transparent;color:var(--muted);padding:10px 13px;font-size:11px;letter-spacing:.04em;transition:.2s;}
+.music-mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.music-auto-panel,.music-own-panel{padding:3px 0 0;}
+.music-auto-top{display:flex;align-items:center;justify-content:space-between;gap:15px;}
+.music-auto-top strong{display:block;font:21px var(--serif);font-weight:500;margin-top:5px;}
+.music-kicker,.ai-insight-label{display:block;font:9px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
+.music-auto-panel p,.music-own-hint{font-size:11px;color:var(--muted);line-height:1.65;margin:12px 0;}
+.music-action-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;}
+.music-action-row .btn{padding:10px 13px;font-size:9px;}
+#autoPreviewPlayer{width:100%;height:38px;margin-top:14px;}
+#autoPreviewPlayer[hidden],.music-own-panel[hidden],.music-auto-panel[hidden]{display:none;}
+.sound-wave{height:38px;display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.sound-wave i{display:block;width:3px;height:8px;background:var(--accent);opacity:.65;border-radius:4px;}
+.sound-wave i:nth-child(3n){height:17px}.sound-wave i:nth-child(4n){height:25px}.sound-wave i:nth-child(5n){height:12px}
+.sound-wave.is-playing i{animation:wavePulse .72s ease-in-out infinite alternate;opacity:1;}
+.sound-wave.is-playing i:nth-child(2n){animation-delay:.12s}.sound-wave.is-playing i:nth-child(3n){animation-delay:.24s}.sound-wave.is-playing i:nth-child(4n){animation-delay:.36s}
+@keyframes wavePulse{from{transform:scaleY(.45)}to{transform:scaleY(1.5)}}
+.ai-insight{border:1px solid var(--line);background:var(--bg);padding:16px;margin-top:20px;}
+.ai-insight strong{display:block;font:23px var(--serif);font-weight:500;margin:9px 0 5px;color:var(--paper);}
+.ai-insight p{margin:0 0 12px;font-size:11px;line-height:1.65;color:var(--muted);}
+.ai-insight small{display:block;margin-top:11px;font-size:9px;line-height:1.6;color:var(--muted);}
+.ai-meter{height:3px;background:var(--line);overflow:hidden;}
+.ai-meter span{display:block;height:100%;width:4%;background:var(--accent);transition:width .35s ease;}
+body[data-theme="dark"] .music-studio{background:#202420;border-color:#3a4039;}
+body[data-theme="dark"] .music-mode-btn{background:#242925;color:#c2c0b7;border-color:#454b43;}
+body[data-theme="dark"] .music-mode-btn.active{background:#bd795d;color:#fff;border-color:#bd795d;}
+body[data-theme="dark"] .ai-insight{background:#191d19;border-color:#3a4039;}
+body[data-theme="dark"] .ai-insight strong{color:#f0eee8;}
+body[data-theme="dark"] .music-auto-panel p,body[data-theme="dark"] .music-own-hint{color:#aaa99f;}
+body[data-theme="dark"] #autoPreviewPlayer{color-scheme:dark;}
+@media(max-width:600px){.music-auto-top{align-items:flex-start}.music-auto-top strong{font-size:18px}.music-action-row{align-items:flex-start}.music-action-row .file-list{flex-basis:100%}.music-studio{padding:13px}.music-mode-btn{flex:1;padding:10px 8px;}}
+
+
+/* QUADRA V9 — editorial landing + real music catalogue */
+.hero{min-height:510px;gap:clamp(28px,5vw,72px);padding:52px 0 78px}
+.hero h1{font-size:clamp(64px,9vw,116px);line-height:.88;letter-spacing:-.065em}
+.hero p{font-size:14px;max-width:420px}
+.hero-art{height:470px;border:0;background:
+ radial-gradient(ellipse at 68% 25%,rgba(250,240,219,.85),transparent 24%),
+ radial-gradient(ellipse at 34% 65%,rgba(165,115,82,.45),transparent 34%),
+ linear-gradient(145deg,#c9c4ad,#e8d9c4 48%,#89927f);box-shadow:0 28px 70px rgba(63,54,39,.16)}
+.hero-art:before{width:62%;height:83%;right:10%;top:8%;transform:rotate(7deg);background:
+ linear-gradient(145deg,rgba(255,249,235,.96),rgba(195,187,160,.9) 52%,rgba(108,125,103,.92))}
+.hero-art:after{left:8%;top:13%;width:43%;height:57%;transform:rotate(-9deg);background:
+ linear-gradient(160deg,rgba(248,239,219,.52),rgba(108,125,103,.22)),
+ radial-gradient(ellipse at 50% 30%,rgba(255,255,255,.85),transparent 60%)}
+.hero-art .art-caption{max-width:255px;padding:22px 24px}
+.hero-art:after{box-shadow:0 18px 40px rgba(53,48,38,.14)}
+.home-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 74px}
+.home-tile{padding:20px 20px 22px;border:1px solid var(--line);background:var(--panel);min-height:128px}
+.home-tile small{font:9px var(--mono);letter-spacing:.15em;color:var(--accent)}
+.home-tile strong{display:block;font:24px var(--serif);font-weight:500;margin:12px 0 6px}
+.home-tile span{font-size:11px;line-height:1.6;color:var(--muted)}
+.home-intro{display:grid;grid-template-columns:.7fr 1.3fr;gap:35px;align-items:start;padding:10px 0 20px}
+.home-intro h2{font:clamp(30px,4vw,48px)/1.05 var(--serif);font-weight:500;margin:10px 0}
+.home-intro p{font-size:13px;line-height:1.9;color:var(--muted);max-width:590px}
+.music-results{display:grid;gap:9px;margin-top:16px}
+.track-card{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;padding:9px;border:1px solid var(--line);background:var(--panel)}
+.track-card img{width:54px;height:54px;object-fit:cover;background:var(--line)}
+.track-card strong{display:block;font-size:12px;line-height:1.4}
+.track-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.track-card button{border:1px solid var(--line);background:transparent;color:var(--paper);padding:8px 10px;font-size:10px}
+.track-card button:hover,.track-card button.chosen{border-color:var(--accent);color:var(--accent)}
+.track-card .track-open{display:inline-block;margin-top:5px;color:var(--accent);font-size:9px;text-decoration:none}
+.music-search-row{display:flex;gap:8px;margin-top:14px}
+.music-search-row input{min-width:0;flex:1;padding:11px 12px;border:1px solid var(--line);background:var(--panel);color:var(--paper);font:11px var(--sans)}
+.music-search-row button{padding:10px 13px;border:1px solid var(--accent);background:var(--accent);color:white;font-size:10px}
+.music-source-note{font-size:10px!important;color:var(--muted)!important;margin-top:10px!important}
+body[data-theme="dark"] .home-tile,body[data-theme="dark"] .track-card{background:#222522;border-color:#3a3e38}
+body[data-theme="dark"] .track-card button{color:#eee;border-color:#454b43}
+body[data-theme="dark"] .music-search-row input{background:#242925;color:#f0eee8;border-color:#454b43}
+body[data-theme="dark"] .hero-art{box-shadow:0 28px 70px rgba(0,0,0,.3)}
+@media(max-width:760px){.hero{grid-template-columns:1fr;min-height:0;padding:28px 0 42px}.hero-art{height:290px}.home-strip{grid-template-columns:1fr;margin-bottom:44px}.home-tile{min-height:0}.home-intro{grid-template-columns:1fr;gap:8px}}
+@media(max-width:440px){.hero-art{height:235px}.hero h1{font-size:65px}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">QUADRA</div>
+  <nav class="nav" aria-label="Основная навигация QUADRA">
+    <button class="active" data-view="home">Главная</button>
+    <button data-view="create">Создать</button>
+    <button data-view="archive">Архив <span id="archiveCount"></span></button>
+  </nav>
+
+<div class="theme-switch" role="group" aria-label="Выбор темы">
+  <button type="button" class="theme-btn active" data-theme-choice="light" aria-pressed="true" title="Светлая тема">☼ <span>Светлая</span></button>
+  <button type="button" class="theme-btn" data-theme-choice="dark" aria-pressed="false" title="Тёмная тема">☾ <span>Тёмная</span></button>
+</div>
+</header>
+<main>
+<section class="view active" id="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">QUADRA &nbsp; / &nbsp; YOUR PERSONAL MEMORY SPACE</div>
+      <h1>Keep the<br><em>feeling.</em></h1>
+      <p>У каждого дня есть свой цвет, звук и настроение. Собери их в одну историю — чтобы однажды снова оказаться в этом моменте.</p>
+      <button class="btn" id="startBtn">Создать воспоминание ↗</button>
+      <div style="margin-top:18px;font:9px var(--mono);letter-spacing:.14em;color:var(--muted)">TEXT &nbsp; / &nbsp; IMAGE &nbsp; / &nbsp; SOUND</div>
+    </div>
+    <div class="hero-art"><div class="art-caption"><small>QUADRA / MEMORY Nº 001</small>Moments<br>in motion.</div></div>
+  </div>
+  <div class="home-strip">
+    <div class="home-tile"><small>01 / WORDS</small><strong>Твоя история</strong><span>Запиши детали, которые не хочется забывать.</span></div>
+    <div class="home-tile"><small>02 / VISUALS</small><strong>Твой кадр</strong><span>Фотографии и цвета создадут атмосферу.</span></div>
+    <div class="home-tile"><small>03 / SOUND</small><strong>Твой саундтрек</strong><span>Подбор реальных песен под настроение дня.</span></div>
+  </div>
+  <div class="home-intro">
+    <div><div class="eyebrow">THE IDEA</div><h2>Не просто<br>дневник.</h2></div>
+    <p>QUADRA превращает воспоминания в небольшие мультимедийные истории. Опиши день, добавь фотографии, а система предложит музыку из каталога Deezer. Ты можешь выбрать другую песню или загрузить собственный аудиофайл.</p>
+  </div>
+</section>
+
+<section class="view" id="create">
+  <div class="section-head"><div><div class="eyebrow">NEW MEMORY / 01</div><h2>Сохрани сегодняшний день.</h2></div><p>01 — 04 / INPUT</p></div>
+  <div class="form-grid">
+    <div>
+      <div class="field"><label for="dayTitle">Название воспоминания (необязательно)</label><input id="dayTitle" type="text" maxlength="70" placeholder="Например, Там, где пахнет осенью"></div>
+      <div class="field"><label for="dayText">Расскажи, как прошёл день</label><textarea id="dayText" placeholder="Где ты был? Что происходило вокруг? Какой был свет, погода, звуки? Какие мелочи запомнились?"></textarea><div class="hint">Чем конкретнее детали, тем выразительнее получится воспоминание.</div></div>
+      <div class="field"><label for="photos">Фотографии</label><div class="upload"><input id="photos" type="file" accept="image/*" multiple><div class="file-list" id="photoNames">Можно добавить несколько фотографий.</div><div class="preview-strip" id="photoPreview"></div></div></div>
+      <div class="field">
+        <label>Музыкальное сопровождение</label>
+        <div class="music-studio">
+          <div class="music-mode-switch" role="group" aria-label="Выбор источника музыки">
+            <button type="button" class="music-mode-btn active" data-music-mode="auto" aria-pressed="true">✦ Автоподбор</button>
+            <button type="button" class="music-mode-btn" data-music-mode="own" aria-pressed="false">♫ Своя музыка</button>
+          </div>
+          <div class="music-auto-panel" id="musicAutoPanel">
+            <div class="music-auto-top">
+              <div><span class="music-kicker">QUADRA MUSIC MATCH</span><strong id="soundRecommendation">Подбираем песни по настроению</strong></div>
+              <div class="sound-wave" id="soundWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <p id="musicAutoDescription">Опиши воспоминание — QUADRA определит настроение и найдёт подходящие существующие песни в каталоге Deezer.</p>
+            <div class="music-search-row">
+              <input id="musicSearchInput" type="search" placeholder="Найти песню или исполнителя…" aria-label="Поиск музыки">
+              <button type="button" id="musicSearchBtn">Найти</button>
+            </div>
+            <div class="music-results" id="musicResults" aria-live="polite"><div class="file-list">Добавь описание дня — появятся музыкальные рекомендации.</div></div>
+            <div class="music-action-row">
+              <span class="file-list" id="musicStatus">Можно выбрать рекомендацию или найти конкретную песню.</span>
+            </div>
+            <p class="music-source-note">Каталог и 30-секундные фрагменты предоставляются Deezer. Полное прослушивание открывается в музыкальном сервисе.</p>
+            <audio id="autoPreviewPlayer" controls preload="none" hidden></audio>
+          </div>
+          <div class="music-own-panel" id="musicOwnPanel" hidden>
+            <div class="upload"><input id="music" type="file" accept="audio/*"><div class="file-list" id="musicName">Загрузи свою музыку в формате MP3, WAV, M4A или другом аудиоформате.</div></div>
+            <p class="music-own-hint">Твой файл будет прикреплён к воспоминанию. Автоматический саундтрек при этом не создаётся.</p>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>Настроение (можно оставить автоматическое)</label><div class="mood-row" id="moods">
+        <button class="mood-chip selected" data-mood="auto">Авто</button><button class="mood-chip" data-mood="warm">Тёплое</button><button class="mood-chip" data-mood="calm">Спокойное</button><button class="mood-chip" data-mood="melancholy">Меланхоличное</button><button class="mood-chip" data-mood="energetic">Энергичное</button>
+      </div></div>
+      <button class="btn" id="generateBtn">Создать воспоминание ↗</button>
+    </div>
+    <aside class="panel">
+      <div class="eyebrow">HOW IT WORKS</div><h3>Три детали. Одна история.</h3>
+      <p>Текст помогает определить настроение, фотография задаёт цветовую основу, а музыка влияет на ритм просмотра.</p>
+      <div style="border-top:1px solid var(--line);padding-top:16px;margin-top:20px">
+        <p><strong style="color:var(--paper)">01 / TEXT</strong><br>Слова и детали дня формируют историю.</p>
+        <p><strong style="color:var(--paper)">02 / IMAGE</strong><br>Цвета фотографий становятся частью палитры.</p>
+        <p><strong style="color:var(--paper)">03 / SOUND</strong><br>Добавленная музыка сопровождает воспоминание.</p>
+      </div>
+      <p style="font-size:10px">Файлы обрабатываются локально в этом браузере. Не закрывай страницу во время создания записи.</p>
+      <div class="ai-insight" aria-live="polite">
+        <div class="ai-insight-label">QUADRA AI / MOOD ENGINE</div>
+        <strong id="aiMoodName">Ожидает текст</strong>
+        <p id="aiMoodText">Добавь описание дня — система выделит эмоциональные сигналы и предложит подходящую атмосферу.</p>
+        <div class="ai-meter"><span id="aiMoodMeter"></span></div>
+        <small>Локальный AI-прототип: анализ выполняется в браузере. Для подключения полноценной облачной нейросети понадобится защищённый сервер.</small>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="view" id="result">
+  <div class="section-head"><div><div class="eyebrow">YOUR MEMORY / GENERATED</div><h2>Этот день теперь с тобой.</h2></div><p id="resultDate"></p></div>
+  <article class="generated calm" id="memoryCard">
+    <div class="memory-top"><span class="memory-brand"><b>Q</b> QUADRA <i>/ MEMORY ARCHIVE</i></span><span id="memoryDate"></span></div>
+    <div class="memory-content"><div class="eyebrow" id="memoryMood">A MOMENT TO KEEP</div><h2 id="memoryTitle">Somewhere in between.</h2><p id="memoryText"></p><div class="sound-note" id="soundNote">SOUNDTRACK / NOT ADDED</div><div class="memory-photos" id="memoryPhotos"></div></div>
+    <div class="memory-bottom"><span>QUADRA · TEXT / IMAGE / SOUND</span><span id="memorySignature">A DAY THAT STAYS</span></div>
+  </article>
+  <div class="actions">
+    <button class="btn" id="saveBtn">Сохранить в архив</button>
+    <button class="btn secondary" id="playBtn">▶ Воспроизвести музыку</button>
+    <button class="btn secondary" id="backBtn">Изменить запись</button>
+    <button class="btn secondary" id="exportBtn">Экспортировать текст</button>
+  </div>
+  <audio id="audioPlayer" controls style="display:none;width:100%;margin-top:15px"></audio>
+</section>
+
+<section class="view" id="archive">
+  <div class="section-head"><div><div class="eyebrow">YOUR COLLECTION</div><h2>Архив воспоминаний.</h2></div><p id="archiveSubtitle">0 MEMORIES</p></div>
+  <div class="archive-tools"><input id="archiveSearch" type="search" placeholder="Поиск по названию или тексту…" aria-label="Поиск воспоминаний"><select id="archiveFilter" aria-label="Фильтр настроения"><option value="all">Все настроения</option><option value="warm">Тёплое</option><option value="calm">Спокойное</option><option value="melancholy">Меланхоличное</option><option value="energetic">Энергичное</option></select></div>
+  <div class="archive-grid" id="archiveGrid"></div>
+  <div class="empty" id="emptyArchive">Здесь пока тихо.<br>Создай первое воспоминание, чтобы оно появилось в архиве.</div>
+</section>
+</main>
+<footer class="footer"><span>QUADRA — A DAY THAT STAYS</span><span>YOUR DAYS, YOUR STORIES.</span></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const DB_NAME='quadra-db', STORE='memories';
+let selectedMood='auto', selectedPhotos=[], selectedMusic=null, currentDraft=null, currentAudioUrl=null;
+const $=id=>document.getElementById(id);
+function showToast(message){const t=$('toast');t.textContent=message;t.style.display='block';setTimeout(()=>t.style.display='none',2600)}
+function navigate(view){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===view));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));if(view==='archive')renderArchive();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.view)));
+$('startBtn').onclick=()=>navigate('create');
+$('backBtn').onclick=()=>navigate('create');
+document.querySelectorAll('.mood-chip').forEach(b=>b.onclick=()=>{selectedMood=b.dataset.mood;document.querySelectorAll('.mood-chip').forEach(x=>x.classList.toggle('selected',x===b))});
+$('photos').addEventListener('change',e=>{selectedPhotos=[...e.target.files].slice(0,8);$('photoNames').textContent=selectedPhotos.length?selectedPhotos.map(f=>f.name).join(' · '):'Можно добавить несколько фотографий.';$('photoPreview').innerHTML='';selectedPhotos.slice(0,3).forEach(f=>{const img=document.createElement('img');img.src=URL.createObjectURL(f);$('photoPreview').appendChild(img)})});
+let musicMode='auto',autoPreviewBlob=null,autoPreviewMood=null,autoPreviewUrl=null,selectedDeezerTrack=null,deezerResults=[];
+function setMusicMode(mode){musicMode=mode;document.querySelectorAll('[data-music-mode]').forEach(b=>{const active=b.dataset.musicMode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});$('musicAutoPanel').hidden=mode!=='auto';$('musicOwnPanel').hidden=mode!=='own';if(mode==='own')selectedMusic=$('music').files[0]||null;else{selectedMusic=null;$('autoPreviewPlayer').pause();$('soundWave').classList.remove('is-playing')}if(mode==='auto'){updateMoodInsight();const text=$('dayText').value.trim();if(text.length>8)recommendDeezerMood(selectedMood==='auto'?analyzeTextMood(text).mood:selectedMood)}}
+document.querySelectorAll('[data-music-mode]').forEach(b=>b.addEventListener('click',()=>setMusicMode(b.dataset.musicMode)));
+$('music').addEventListener('change',e=>{selectedMusic=e.target.files[0]||null;$('musicName').textContent=selectedMusic?('Выбрано: '+selectedMusic.name):'Загрузи свою музыку в формате MP3, WAV, M4A или другом аудиоформате.';if(selectedMusic)showToast('Своя музыка добавлена.')});
+$('dayText').addEventListener('input',updateMoodInsight);
+
+const deezerMoodQueries={
+ warm:['feel good indie pop','warm acoustic songs','happy indie pop'],
+ calm:['ambient chill instrumental','soft piano chill','dreamy indie'],
+ melancholy:['melancholic indie','sad piano indie','dream pop'],
+ energetic:['upbeat indie pop','electronic dance pop','energetic alternative']
+};
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function deezerSearchUrl(q){return 'https://www.deezer.com/search/'+encodeURIComponent(q)}
+async function searchDeezer(q){
+ selectedDeezerTrack=null;
+ const box=$('musicResults');box.innerHTML='<div class="file-list">Ищем песни в музыкальном каталоге…</div>';
+ $('musicStatus').textContent='Поиск в Deezer…';
+ try{
+  const url='https://proxy.cors.dev/https://api.deezer.com/search?q='+encodeURIComponent(q)+'&limit=8';
+  const res=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!res.ok)throw new Error('Catalog unavailable');
+  const json=await res.json();
+  const tracks=(json.data||[]).filter(t=>t&&t.id&&t.title&&t.artist);
+  deezerResults=tracks;
+  if(tracks.length&&!selectedDeezerTrack)selectedDeezerTrack=tracks[0];
+  renderDeezerTracks(tracks);
+  $('musicStatus').textContent=tracks.length?'Выбери песню и включи 30-секундный фрагмент.':'Ничего не найдено — попробуй другой запрос.';
+  if(!tracks.length)box.innerHTML='<div class="file-list">Не нашли подходящих песен. Попробуй другой запрос или открой <a target="_blank" rel="noopener" href="'+deezerSearchUrl(q)+'">поиск Deezer</a>.</div>';
+ }catch(err){
+  console.warn(err);
+  deezerResults=[];
+  box.innerHTML='<div class="file-list">Каталог сейчас не ответил. Можно открыть <a target="_blank" rel="noopener" href="'+deezerSearchUrl(q)+'">результаты поиска Deezer</a> или загрузить свою музыку ниже.</div>';
+  $('musicStatus').textContent='Не удалось подключиться к каталогу. Проверь интернет и попробуй ещё раз.';
+ }
+}
+function renderDeezerTracks(tracks){
+ const box=$('musicResults');box.innerHTML='';
+ tracks.forEach(track=>{
+  const row=document.createElement('div');row.className='track-card';
+  const cover=document.createElement('img');cover.src=track.album?.cover_small||track.album?.cover||'';cover.alt='Обложка '+track.title;
+  const meta=document.createElement('div');
+  const name=document.createElement('strong');name.textContent=track.title;
+  const artist=document.createElement('small');artist.textContent=track.artist.name+(track.album?.title?' · '+track.album.title:'');
+  const link=document.createElement('a');link.className='track-open';link.href=track.link;link.target='_blank';link.rel='noopener';link.textContent='Открыть в Deezer ↗';
+  meta.append(name,artist,link);
+  const play=document.createElement('button');play.type='button';play.textContent=selectedDeezerTrack?.id===track.id?'Выбрано ✓':'Выбрать';
+  play.classList.toggle('chosen',selectedDeezerTrack?.id===track.id);
+  play.addEventListener('click',()=>selectDeezerTrack(track));
+  row.append(cover,meta,play);
+  if(track.preview){
+   const preview=document.createElement('button');preview.type='button';preview.textContent='▶ 30 сек';
+   preview.addEventListener('click',()=>playDeezerPreview(track));
+   row.appendChild(preview);
+  }
+  box.appendChild(row);
+ });
+}
+async function playDeezerPreview(track){
+ try{
+  const player=$('autoPreviewPlayer');
+  player.pause();player.src=track.preview;player.hidden=false;player.currentTime=0;
+  await player.play();
+  $('musicStatus').textContent='Фрагмент: '+track.title+' — '+track.artist.name;
+ }catch(e){showToast('Не удалось запустить фрагмент. Открой песню в Deezer.')}
+}
+function selectDeezerTrack(track){
+ selectedDeezerTrack=track;
+ selectedMusic=null;
+ $('musicStatus').textContent='Выбрано: '+track.title+' — '+track.artist.name+'. При сохранении добавится доступный фрагмент.';
+ renderDeezerTracks(deezerResults);
+ showToast('Песня добавлена к воспоминанию.');
+}
+async function recommendDeezerMood(mood){
+ selectedDeezerTrack=null;
+ const q=(deezerMoodQueries[mood]||deezerMoodQueries.calm)[0];
+ $('soundRecommendation').textContent='Подбор: '+moodMeta[mood].name.toLowerCase();
+ $('musicAutoDescription').textContent='Ищем реальные песни, подходящие под это настроение.';
+ await searchDeezer(q);
+}
+$('musicSearchBtn').addEventListener('click',()=>{const q=$('musicSearchInput').value.trim();if(q)searchDeezer(q)});
+$('musicSearchInput').addEventListener('keydown',e=>{if(e.key==='Enter'){const q=e.target.value.trim();if(q)searchDeezer(q)}});
+$('autoPreviewPlayer').addEventListener('play',()=>$('soundWave').classList.add('is-playing'));
+$('autoPreviewPlayer').addEventListener('pause',()=>$('soundWave').classList.remove('is-playing'));
+$('autoPreviewPlayer').addEventListener('ended',()=>$('soundWave').classList.remove('is-playing'));
+document.querySelectorAll('.mood-chip').forEach(b=>b.addEventListener('click',()=>{updateMoodInsight();if(musicMode==='auto')recommendDeezerMood(selectedMood==='auto'?analyzeTextMood($('dayText').value).mood:selectedMood)}));
+let moodSearchTimer=null;
+$('dayText').addEventListener('input',()=>{updateMoodInsight();clearTimeout(moodSearchTimer);moodSearchTimer=setTimeout(()=>{if(musicMode==='auto'&&$('dayText').value.trim().length>20)recommendDeezerMood(selectedMood==='auto'?analyzeTextMood($('dayText').value).mood:selectedMood)},900)});
+updateMoodInsight();
+
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(STORE,{keyPath:'id'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function dbPut(item){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(item);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+async function dbAll(){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction(STORE).objectStore(STORE).getAll();req.onsuccess=()=>resolve(req.result.sort((a,b)=>b.created-a.created));req.onerror=()=>reject(req.error)})}
+async function dbGet(id){const db=await openDB();return new Promise((resolve,reject)=>{const req=db.transaction(STORE).objectStore(STORE).get(id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+const moodMeta={
+ warm:{name:'Тёплое настроение',music:'Тёплый ambient · мягкие аккорды',description:'Мягкие мажорные аккорды и спокойные переливы — для светлого, уютного воспоминания.'},
+ calm:{name:'Спокойное настроение',music:'Airy ambient · плавные слои',description:'Воздушный фон с длинными звуковыми слоями — для тихого и размеренного момента.'},
+ melancholy:{name:'Меланхоличное настроение',music:'Soft cinematic · минорные тона',description:'Нежные минорные гармонии и глубокие ноты — для задумчивой атмосферы.'},
+ energetic:{name:'Энергичное настроение',music:'Light electronic · мягкий ритм',description:'Лёгкие пульсирующие ноты и более живой ритм — для насыщенного дня.'}
+};
+function analyzeTextMood(text){
+ const t=(text||'').toLowerCase();
+ const groups={
+  warm:['радост','счаст','весел','друз','люб','смеял','солнеч','встреч','празд','уют','обним','вдохнов','приятн','смех','красив','тепл','подар','улыб'],
+  calm:['спокой','тихо','книг','дома','чай','отдых','умиротвор','вечер','медлен','прогул','тишин','расслаб','природ','море','лес','облака'],
+  melancholy:['груст','одинок','дожд','скуч','тоск','потер','устал','пуст','сложн','плак','тяжёл','тяжел','не хват','прощ','вспомин'],
+  energetic:['быстро','побед','успел','проект','срочно','танц','бег','энерг','соревн','движ','успех','достиж','работ','путешеств','концерт','играл']
+ };
+ const scores={warm:0,calm:0,melancholy:0,energetic:0};
+ for(const [m,words] of Object.entries(groups))words.forEach(w=>{let pos=-1;while((pos=t.indexOf(w,pos+1))!==-1)scores[m]++});
+ const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+ const total=Object.values(scores).reduce((a,b)=>a+b,0);
+ const mood=total===0?'calm':(sorted[0][1]===sorted[1][1]?'calm':sorted[0][0]);
+ const confidence=total===0?8:Math.min(96,Math.round(38+sorted[0][1]/Math.max(1,total)*55));
+ return {mood,scores,total,confidence};
+}
+function detectMood(text){return analyzeTextMood(text).mood}
+function updateMoodInsight(){
+ const text=$('dayText').value.trim();
+ const result=analyzeTextMood(text);
+ const mood=selectedMood==='auto'?result.mood:selectedMood;
+ const meta=moodMeta[mood];
+ $('aiMoodName').textContent=selectedMood==='auto'?meta.name:'Выбрано: '+meta.name.toLowerCase();
+ $('aiMoodText').textContent=text.length<18?'Добавь ещё немного деталей — так подбор будет точнее. Сейчас система предлагает '+meta.name.toLowerCase()+'.':(selectedMood==='auto'?'По эмоциональным словам в тексте: '+meta.name.toLowerCase()+'. Подходящий звук: '+meta.music+'.':'Настроение выбрано вручную. Для него подготовлен вариант: '+meta.music+'.');
+ $('aiMoodMeter').style.width=(selectedMood==='auto'?result.confidence:100)+'%';
+ $('soundRecommendation').textContent=meta.music;
+ $('musicAutoDescription').textContent='Настроение: '+meta.name.toLowerCase()+'. QUADRA ищет настоящие песни с похожей атмосферой.';
+}
+
+function readImagePalette(file){return new Promise(resolve=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{try{const c=document.createElement('canvas'),ctx=c.getContext('2d',{willReadFrequently:true});c.width=24;c.height=24;ctx.drawImage(img,0,0,24,24);const d=ctx.getImageData(0,0,24,24).data;let r=0,g=0,b=0,n=0;for(let i=0;i<d.length;i+=4){if(d[i+3]>100){r+=d[i];g+=d[i+1];b+=d[i+2];n++}}resolve(n?`rgb(${Math.round(r/n)}, ${Math.round(g/n)}, ${Math.round(b/n)})`:'#756c5c')}catch(e){resolve('#756c5c')}URL.revokeObjectURL(url)};img.onerror=()=>resolve('#756c5c');img.src=url})}
+function hexFromRgb(rgb){const m=rgb.match(/\d+/g);return m?'#'+m.slice(0,3).map(x=>(+x).toString(16).padStart(2,'0')).join(''):'#756c5c'}
+function titleFromText(text){const clean=text.trim().replace(/[.!?].*$/s,'').split(/\s+/).slice(0,7).join(' ');return clean?clean[0].toUpperCase()+clean.slice(1):'A day that stays.'}
+
+async function analyzeAudio(file){
+ if(!file)return {label:'NO SOUNDTRACK',energy:0.35};
+ const Ctx=window.AudioContext||window.webkitAudioContext;
+ if(!Ctx)return {label:'SOUNDTRACK ADDED',energy:0.35};
+ let ctx;
+ try{
+  ctx=new Ctx();
+  const buffer=await ctx.decodeAudioData(await file.arrayBuffer());
+  const channel=buffer.getChannelData(0),step=Math.max(1,Math.floor(channel.length/12000));
+  let sum=0,changes=0,prev=0,count=0;
+  for(let i=0;i<channel.length;i+=step){
+   const v=channel[i];sum+=v*v;const sign=v>=0?1:-1;
+   if(count&&sign!==prev)changes++;prev=sign;count++;
+  }
+  const rms=Math.sqrt(sum/Math.max(1,count));
+  const crossing=changes/Math.max(1,count);
+  const energy=Math.max(0,Math.min(1,rms*2.7+crossing*1.8));
+  const label=energy>.62?'HIGH ENERGY / DYNAMIC RHYTHM':energy>.32?'BALANCED / STEADY FLOW':'SOFT / SLOW ATMOSPHERE';
+  await ctx.close();return {label,energy};
+ }catch(e){try{if(ctx)await ctx.close()}catch(_){}return {label:'SOUNDTRACK ADDED',energy:0.35}}
+}
+
+
+// Original ambient soundscapes are synthesized locally with Web Audio.
+function audioBufferToWav(buffer){
+ const channels=buffer.numberOfChannels,length=buffer.length,rate=buffer.sampleRate;
+ const bytes=44+length*channels*2,ab=new ArrayBuffer(bytes),view=new DataView(ab);
+ const write=(o,str)=>{for(let i=0;i<str.length;i++)view.setUint8(o+i,str.charCodeAt(i))};
+ write(0,'RIFF');view.setUint32(4,bytes-8,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,channels,true);view.setUint32(24,rate,true);view.setUint32(28,rate*channels*2,true);view.setUint16(32,channels*2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,bytes-44,true);
+ const data=Array.from({length:channels},(_,i)=>buffer.getChannelData(i));let offset=44;
+ for(let i=0;i<length;i++)for(let ch=0;ch<channels;ch++){const sample=Math.max(-1,Math.min(1,data[ch][i]));view.setInt16(offset,sample<0?sample*0x8000:sample*0x7fff,true);offset+=2}
+ return new Blob([ab],{type:'audio/wav'});
+}
+async function createAmbientTrack(mood){
+ const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+ if(!Offline)throw new Error('OfflineAudioContext is not supported');
+ const sampleRate=22050,duration=14,ctx=new Offline(2,Math.floor(sampleRate*duration),sampleRate);
+ const presets={
+  warm:{notes:[196,246.94,293.66,369.99],plucks:[392,369.99,293.66,246.94],pulse:1.8,brightness:0.42},
+  calm:{notes:[174.61,220,261.63,329.63],plucks:[329.63,261.63,220,261.63],pulse:2.8,brightness:0.28},
+  melancholy:{notes:[146.83,174.61,220,261.63],plucks:[293.66,261.63,220,174.61],pulse:2.3,brightness:0.23},
+  energetic:{notes:[196,246.94,293.66,392],plucks:[392,493.88,587.33,493.88,392,293.66],pulse:0.72,brightness:0.58}
+ };
+ const preset=presets[mood]||presets.calm;
+ const master=ctx.createGain();master.gain.value=.72;master.connect(ctx.destination);
+ // Slow evolving pad chords.
+ preset.notes.forEach((freq,i)=>{
+  const osc=ctx.createOscillator(),filter=ctx.createBiquadFilter(),gain=ctx.createGain(),pan=ctx.createStereoPanner();
+  osc.type=i===0?'triangle':'sine';osc.frequency.value=freq;
+  filter.type='lowpass';filter.frequency.value=480+ i*95 + preset.brightness*500;filter.Q.value=.35;
+  const volume=(i===0?.052:.028);
+  gain.gain.setValueAtTime(.0001,0);gain.gain.linearRampToValueAtTime(volume,2.2);gain.gain.setValueAtTime(volume,9);gain.gain.exponentialRampToValueAtTime(.0001,13.8);
+  pan.pan.value=(i%2===0?-.42:.42);
+  osc.connect(filter);filter.connect(gain);gain.connect(pan);pan.connect(master);osc.start(0);osc.stop(duration);
+  const lfo=ctx.createOscillator(),lfoGain=ctx.createGain();lfo.frequency.value=.08+i*.025;lfoGain.gain.value=volume*.24;lfo.connect(lfoGain);lfoGain.connect(gain.gain);lfo.start(0);lfo.stop(duration);
+ });
+ // Sparse bell-like notes; the energetic mood uses a quicker pattern.
+ let step=0;for(let time=.45;time<duration-1;time+=preset.pulse){
+  const freq=preset.plucks[step%preset.plucks.length],osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),pan=ctx.createStereoPanner();
+  osc.type='sine';osc.frequency.setValueAtTime(freq,time);osc.frequency.exponentialRampToValueAtTime(freq*(mood==='energetic'?1.015:.995),time+.65);
+  filter.type='lowpass';filter.frequency.value=1500+preset.brightness*2800;
+  const vol=mood==='energetic'?.055:.027;gain.gain.setValueAtTime(.0001,time);gain.gain.exponentialRampToValueAtTime(vol,time+.025);gain.gain.exponentialRampToValueAtTime(.0001,time+1.05);
+  pan.pan.value=Math.sin(step*.8)*.45;osc.connect(filter);filter.connect(gain);gain.connect(pan);pan.connect(master);osc.start(time);osc.stop(time+1.1);step++;
+ }
+ const rendered=await ctx.startRendering();return audioBufferToWav(rendered);
+}
+
+const styles={
+ warm:{bg:'#eee1ce',accent:'#b77b52',class:'calm',label:'WARM / GOLDEN HOUR'},
+ calm:{bg:'#e4e8df',accent:'#788b75',class:'calm',label:'QUIET / SLOW MOMENTS'},
+ melancholy:{bg:'#e2e7ec',accent:'#71869d',class:'melancholy',label:'BLUE / AFTER THE RAIN'},
+ energetic:{bg:'#f0dfd5',accent:'#bd765d',class:'energetic',label:'ENERGY / IN MOTION'}
+};
+$('generateBtn').onclick=async()=>{
+ const text=$('dayText').value.trim();if(!text){showToast('Сначала расскажи, как прошёл день.');$('dayText').focus();return}
+ if(musicMode==='own'&&!selectedMusic){showToast('Сначала загрузи свой аудиофайл.');return}
+ const btn=$('generateBtn');btn.disabled=true;btn.textContent='Создаю атмосферу…';
+ try{
+  const moodAnalysis=analyzeTextMood(text),mood=selectedMood==='auto'?moodAnalysis.mood:selectedMood;
+  const palette=selectedPhotos.length?hexFromRgb(await readImagePalette(selectedPhotos[0])):styles[mood].accent;
+  let finalMusic=null;
+  if(musicMode==='auto'){
+   if(selectedDeezerTrack){
+    let previewBlob=null;
+    if(selectedDeezerTrack.preview){
+     try{const response=await fetch(selectedDeezerTrack.preview);if(response.ok)previewBlob=await response.blob()}catch(e){console.warn('Preview could not be stored',e)}
+    }
+    finalMusic={name:selectedDeezerTrack.title+' — '+selectedDeezerTrack.artist.name,blob:previewBlob,source:'deezer',url:selectedDeezerTrack.link,preview:selectedDeezerTrack.preview||null};
+   }else{
+    finalMusic=null;
+    $('musicStatus').textContent='Воспоминание создаётся без выбранной песни. Выбери рекомендацию, чтобы добавить музыку.';
+   }
+  }else if(musicMode==='own')finalMusic={name:selectedMusic.name,blob:selectedMusic,source:'own'};
+  const soundAnalysis=finalMusic?.blob?await analyzeAudio(finalMusic.blob):{label:finalMusic?.source==='deezer'?'DEEZE​R TRACK SELECTED':'NO SOUNDTRACK',energy:.35};
+  
+  const style=styles[mood],now=new Date();
+  currentDraft={id:crypto.randomUUID(),created:now.getTime(),date:now.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}),title:$('dayTitle').value.trim()||titleFromText(text),text,mood,palette,photos:selectedPhotos.map(f=>({name:f.name,blob:f})),music:finalMusic,soundAnalysis,moodAnalysis};
+  $('autoPreviewPlayer').pause();$('soundWave').classList.remove('is-playing');renderMemory(currentDraft);$('saveBtn').disabled=false;$('saveBtn').textContent='Сохранить в архив';navigate('result');
+ }catch(err){console.error(err);showToast('Не удалось создать саундтрек. Попробуй режим «Своя музыка».')}
+ finally{btn.disabled=false;btn.textContent='Создать воспоминание ↗'}
+};
+function renderMemory(item){const s=styles[item.mood]||styles.calm;const card=$('memoryCard');card.style.setProperty('--memory-bg',s.bg);card.style.setProperty('--memory-accent',item.palette||s.accent);card.className='generated '+s.class;$('memoryTitle').textContent=item.title;$('memoryText').textContent=item.text;$('memoryDate').textContent=item.date;$('resultDate').textContent=item.date.toUpperCase();$('memoryMood').textContent=s.label;$('memorySignature').textContent='A DAY THAT STAYS';
+ const sound=item.soundAnalysis||{label:item.music?'SOUNDTRACK ADDED':'NO SOUNDTRACK',energy:.35};
+ $('soundNote').textContent='SOUNDTRACK / '+sound.label;
+ card.style.setProperty('--motion-speed',Math.round(2.2-(sound.energy||.35)*1.25)+'s');
+ $('memoryPhotos').innerHTML='';(item.photos||[]).slice(0,2).forEach(p=>{const img=document.createElement('img');img.src=URL.createObjectURL(p.blob);img.alt=p.name;$('memoryPhotos').appendChild(img)});$('memoryPhotos').style.display=item.photos?.length?'grid':'none';
+ const player=$('audioPlayer');if(currentAudioUrl)URL.revokeObjectURL(currentAudioUrl);currentAudioUrl=item.music?.blob?URL.createObjectURL(item.music.blob):null;player.src=currentAudioUrl||'';player.loop=false;player.style.display=currentAudioUrl?'block':'none';
+ const deezerLink=item.music?.source==='deezer'&&item.music.url;
+ $('playBtn').textContent=deezerLink?'Открыть песню в Deezer ↗':'▶ Воспроизвести музыку';
+ $('playBtn').disabled=!currentAudioUrl&&!deezerLink;$('playBtn').style.opacity=(currentAudioUrl||deezerLink)?'1':'.4';
+}
+$('saveBtn').onclick=async()=>{if(!currentDraft)return;try{await dbPut(currentDraft);showToast('Воспоминание сохранено в архив.');$('saveBtn').textContent='Сохранено ✓';$('saveBtn').disabled=true;updateCount()}catch(e){showToast('Не удалось сохранить. Проверьте свободное место браузера.')}};
+$('playBtn').onclick=()=>{if(currentDraft?.music?.source==='deezer'&&currentDraft.music.url){window.open(currentDraft.music.url,'_blank','noopener');return}const p=$('audioPlayer');if(!p.src)return;if(p.paused)p.play().catch(()=>showToast('Браузер не смог воспроизвести этот файл.'));else p.pause()};
+$('archiveGrid').addEventListener('click',async e=>{const card=e.target.closest('[data-id]');if(!card)return;const item=await dbGet(card.dataset.id);if(item){currentDraft=item;renderMemory(item);$('saveBtn').textContent='Сохранено ✓';$('saveBtn').disabled=true;navigate('result')}});
+async function renderArchive(){let items=[];try{items=await dbAll()}catch(e){}const q=($('archiveSearch')?.value||'').toLowerCase().trim();const moodFilter=$('archiveFilter')?.value||'all';items=items.filter(x=>(moodFilter==='all'||x.mood===moodFilter)&&(!q||(x.title+' '+x.text).toLowerCase().includes(q)));$('archiveGrid').innerHTML='';$('emptyArchive').style.display=items.length?'none':'block';$('archiveSubtitle').textContent=items.length+' MEMORIES';items.forEach(item=>{const card=document.createElement('article');card.className='archive-card';card.dataset.id=item.id;const cover=document.createElement('div');cover.className='archive-image';if(item.photos?.[0]){const img=document.createElement('img');img.src=URL.createObjectURL(item.photos[0].blob);cover.appendChild(img)}const info=document.createElement('div');info.className='archive-info';const date=document.createElement('small');date.textContent=item.date;const title=document.createElement('h3');title.textContent=item.title;const p=document.createElement('p');p.textContent=item.text.slice(0,90)+(item.text.length>90?'…':'');info.append(date,title,p);card.append(cover,info);$('archiveGrid').appendChild(card)});updateCount()}
+async function updateCount(){try{$('archiveCount').textContent='('+ (await dbAll()).length+')'}catch(e){$('archiveCount').textContent=''}}
+updateCount();
+$('archiveSearch')?.addEventListener('input',renderArchive);
+$('archiveFilter')?.addEventListener('change',renderArchive);
+$('exportBtn')?.addEventListener('click',()=>{
+ if(!currentDraft)return;
+ const text=`QUADRA — ${currentDraft.title}\n${currentDraft.date}\n\n${currentDraft.text}\n\nMood: ${currentDraft.mood}\nSoundtrack: ${currentDraft.music?.name||'not added'}\nSource: ${currentDraft.music?.source==='deezer'?'Deezer catalogue':(currentDraft.music?.source==='own'?'uploaded by user':'not added')}`;
+ const blob=new Blob([text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='quadra-memory.txt';a.click();URL.revokeObjectURL(url);
+});
+</script>
+
+<script>
+(() => {
+  const buttons = document.querySelectorAll('[data-theme-choice]');
+  const applyTheme = (theme) => {
+    const selected = theme === 'dark' ? 'dark' : 'light';
+    document.body.dataset.theme = selected;
+    buttons.forEach((button) => {
+      const active = button.dataset.themeChoice === selected;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    try { localStorage.setItem('quadra-theme', selected); } catch (_) {}
+  };
+  buttons.forEach((button) => button.addEventListener('click', () => applyTheme(button.dataset.themeChoice)));
+  let saved = 'light';
+  try { saved = localStorage.getItem('quadra-theme') || 'light'; } catch (_) {}
+  applyTheme(saved);
+})();
+</script>
+
+<script>
+(() => {
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const themeObserver = new MutationObserver(() => {
+    if (themeMeta) themeMeta.setAttribute('content',
+      document.body.dataset.theme === 'dark' ? '#171817' : '#f4f1e9');
+  });
+  themeObserver.observe(document.body, {attributes:true, attributeFilter:['data-theme']});
+  if (themeMeta) themeMeta.setAttribute('content',
+    document.body.dataset.theme === 'dark' ? '#171817' : '#f4f1e9');
+})();
+</script>
+
+</body>
+</html>
